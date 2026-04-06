@@ -8,6 +8,7 @@
   color: #000;
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 
 /* HEADER */
@@ -25,6 +26,7 @@
   padding: 1rem;
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
 }
 
 /* CARD */
@@ -47,7 +49,7 @@ input {
   width: 100%;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
-  border: 1px solid #0074D9; /* borde azulado */
+  border: 1px solid #0074D9; /* azul */
   border-radius: 5px;
   background-color: #eaeaea;
   color: #000; /* letra negra */
@@ -57,7 +59,7 @@ input {
 }
 
 input:focus {
-  border-color: #005bb5; /* azul más intenso al enfocar */
+  border-color: #005bb5; /* azul más intenso */
   outline: none;
 }
 
@@ -71,6 +73,7 @@ input:focus {
   font-size: 0.95rem;
   min-width: 100px;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .primaryBtn { background-color: #333; color: white; }
@@ -84,6 +87,10 @@ input:focus {
 .deleteBtn:hover { background-color: #cc0000; }
 
 /* TABLE */
+.tableContainer {
+  overflow-x: auto; /* permite scroll horizontal en móviles */
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -93,6 +100,7 @@ table th, table td {
   border: 1px solid #ccc;
   padding: 0.5rem;
   text-align: left;
+  font-size: 0.9rem;
 }
 
 /* FOOTER */
@@ -123,8 +131,37 @@ table th, table td {
   gap: 0.5rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .mainContent {
+    padding: 0.5rem;
+  }
+
   .grid {
-    grid-template-columns: 1fr; /* 1 columna en móviles */
+    grid-template-columns: 1fr; /* una columna en tablets y móviles */
+  }
+
+  .primaryBtn, .secondaryBtn, .editBtn, .deleteBtn {
+    width: 100%; /* botones ocupan todo el ancho en móviles */
+    min-width: unset;
+  }
+
+  table th, table td {
+    font-size: 0.8rem; /* texto más pequeño en móviles */
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1rem;
+  }
+
+  input {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
+
+  .primaryBtn, .secondaryBtn, .editBtn, .deleteBtn {
+    font-size: 0.85rem;
+    padding: 0.35rem;
   }
 }
