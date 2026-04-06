@@ -1,71 +1,87 @@
-/* Contenedor general */
-.appContainer {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  color: #000;
-  padding: 0;
+/* ==========================
+   RESET Y BODY
+========================== */
+* {
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-/* HEADER */
-.appHeader {
-  background-color: #f5f5f5;
+body, html {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5; /* color de fondo */
   color: #000;
-  padding: 1rem;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-}
-
-/* MAIN */
-.mainContent {
-  flex: 1;
-  padding: 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  min-height: 100vh;
   width: 100%;
 }
 
-/* CARD */
+/* ==========================
+   HEADER
+========================== */
+.appHeader {
+  background-color: #f5f5f5;
+  color: #000;
+  text-align: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+/* ==========================
+   MAIN CONTENT
+========================== */
+.mainContent {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  width: 100%;
+}
+
+/* ==========================
+   CARDS
+========================== */
 .card {
-  background-color: #ffffff;
+  background-color: #fff;
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 8px;
   box-shadow: 0 0 3px rgba(0,0,0,0.1);
 }
 
-/* TITULOS */
+/* ==========================
+   TITULOS
+========================== */
 h2 {
   color: #000;
   margin-bottom: 0.5rem;
 }
 
-/* INPUTS */
-input {
+/* ==========================
+   INPUTS
+========================== */
+input, select {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.6rem 0.5rem;
   margin-bottom: 0.5rem;
-  border: 1px solid #0074D9; /* azul */
+  border: 1px solid #0074D9;
   border-radius: 5px;
-  background-color: #eaeaea;
-  color: #000; /* letra negra */
+  background-color: #e0e0e0;
+  color: #000;
   font-size: 1rem;
   box-sizing: border-box;
   transition: border 0.2s;
 }
 
-input:focus {
-  border-color: #005bb5; /* azul más intenso */
+input:focus, select:focus {
+  border-color: #005bb5;
   outline: none;
 }
 
-/* BOTONES ESTANDARIZADOS */
+/* ==========================
+   BOTONES
+========================== */
 .primaryBtn, .secondaryBtn, .editBtn, .deleteBtn {
-  padding: 0.4rem 0.8rem;
+  padding: 0.5rem 1rem;
   margin: 0.3rem;
   border: none;
   border-radius: 5px;
@@ -74,6 +90,7 @@ input:focus {
   min-width: 100px;
   text-align: center;
   box-sizing: border-box;
+  transition: background-color 0.2s;
 }
 
 .primaryBtn { background-color: #333; color: white; }
@@ -86,9 +103,24 @@ input:focus {
 .editBtn:hover { background-color: #e59400; }
 .deleteBtn:hover { background-color: #cc0000; }
 
-/* TABLE */
+/* ==========================
+   GRIDS RESPONSIVE
+========================== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.5rem;
+}
+
+.buttonGroup, .claveContainer {
+  margin-top: 0.5rem;
+}
+
+/* ==========================
+   TABLA
+========================== */
 .tableContainer {
-  overflow-x: auto; /* permite scroll horizontal en móviles */
+  overflow-x: auto;
 }
 
 table {
@@ -103,7 +135,9 @@ table th, table td {
   font-size: 0.9rem;
 }
 
-/* FOOTER */
+/* ==========================
+   FOOTER
+========================== */
 .appFooter {
   background-color: #f5f5f5;
   color: #000;
@@ -113,55 +147,24 @@ table th, table td {
   margin-top: auto;
 }
 
-/* SEPARACION ENTRE AREAS */
-.buttonGroup, .claveContainer {
-  margin-top: 0.5rem;
-}
-
-.grid input {
-  margin-bottom: 0.5rem;
-}
-
 /* ==========================
-   FORMULARIO RESPONSIVE
+   RESPONSIVE
 ========================== */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 0.5rem;
-}
-
 @media (max-width: 768px) {
-  .mainContent {
-    padding: 0.5rem;
-  }
+  .mainContent { padding: 0.5rem; }
 
-  .grid {
-    grid-template-columns: 1fr; /* una columna en tablets y móviles */
-  }
+  .grid { grid-template-columns: 1fr; }
 
   .primaryBtn, .secondaryBtn, .editBtn, .deleteBtn {
-    width: 100%; /* botones ocupan todo el ancho en móviles */
+    width: 100%;
     min-width: unset;
   }
 
-  table th, table td {
-    font-size: 0.8rem; /* texto más pequeño en móviles */
-  }
+  table th, table td { font-size: 0.8rem; }
 }
 
 @media (max-width: 480px) {
-  h2 {
-    font-size: 1rem;
-  }
-
-  input {
-    font-size: 0.9rem;
-    padding: 0.4rem;
-  }
-
-  .primaryBtn, .secondaryBtn, .editBtn, .deleteBtn {
-    font-size: 0.85rem;
-    padding: 0.35rem;
-  }
+  h2 { font-size: 1rem; }
+  input, select { font-size: 0.9rem; padding: 0.5rem; }
+  .primaryBtn, .secondaryBtn, .editBtn, .deleteBtn { font-size: 0.85rem; padding: 0.4rem; }
 }
