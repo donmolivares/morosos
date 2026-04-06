@@ -5,15 +5,7 @@ import "./App.css";
 // Axios toma la URL base desde la variable de entorno
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const getMorosos = async () => {
-  try {
-    const response = await axios.get(`${API_URL}/morosos`);
-    return response.data;
-  } catch (error) {
-    console.error('Error al obtener morosos:', error);
-    throw error;
-  }
-};
+
 
 
 function App() {
