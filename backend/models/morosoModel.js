@@ -1,4 +1,4 @@
-import pool from 'db.js';
+import pool from './db.js';
 
 const getAll = async () => {
   const res = await pool.query('SELECT * FROM morosos ORDER BY id DESC');
