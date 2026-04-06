@@ -46,7 +46,7 @@ function App() {
 
 
   
-};
+
   const getData = async () => {
     try {
     const res = await axios.get(`${API_URL}/morosos`);
