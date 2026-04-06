@@ -2,6 +2,20 @@ import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./App.css";
 
+// Axios toma la URL base desde la variable de entorno
+const API_URL = import.meta.env.VITE_API_URL;
+
+export const getMorosos = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/morosos`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener morosos:', error);
+    throw error;
+  }
+};
+
+
 function App() {
   const [form, setForm] = useState({
     rut: "",
@@ -19,7 +33,9 @@ function App() {
   const [clave, setClave] = useState(""); // input clave
   const [showClave, setShowClave] = useState(false); // mostrar input clave
 
-  const API = "http://localhost:3000/morosos";
+  
+
+
 
   // Refs para Enter
   const rutRef = useRef();
@@ -36,9 +52,17 @@ function App() {
     getData();
   }, []);
 
+
+  
+};
   const getData = async () => {
-    const res = await axios.get(API);
+    try {
+    const res = await axios.get(`${API_URL}/morosos`);
     setLista(res.data);
+     } catch (error) {
+       console.error('Error al obtener morosos:', error);
+    throw error;
+  }
   };
 
   const handleChange = (e) => {
