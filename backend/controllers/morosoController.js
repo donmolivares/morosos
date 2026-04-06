@@ -1,5 +1,4 @@
-import { morosoModel } from "../models/morosoModel";
-
+import { morosoModel } from "../models/morosoModel.js";
 const getMorosos = async (req, res) => {
   try {
     const data = await morosoModel.getAll();
