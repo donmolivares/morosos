@@ -1,4 +1,4 @@
-const pool = require('../db');
+import pool from 'db.js';
 
 const getAll = async () => {
   const res = await pool.query('SELECT * FROM morosos ORDER BY id DESC');
@@ -49,4 +49,4 @@ const remove = async (id) => {
   await pool.query('DELETE FROM morosos WHERE id=$1', [id]);
 };
 
-module.exports = { getAll, create, update, remove };
+export const morosoModel = { getAll, create, update, remove };

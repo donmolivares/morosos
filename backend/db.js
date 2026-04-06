@@ -9,6 +9,9 @@ const pool = new pg.Pool({
   password: DB_PASSWORD,
   database: DB_DATABASE,
   port: DB_PORT || 5432,
+  ssl: {
+    rejectUnauthorized: false
+  },
   allowExitOnIdle: true
 });
 
@@ -18,8 +21,7 @@ pool.query('SELECT NOW()')
     console.log('✅ Conectado a la base de datos:', res.rows[0]);
   })
   .catch(err => {
-    console.error('❌ Error conectando a la base de datos:', err);
-    process.exit(1); // cierra si hay error
-  });
+  console.error('❌ Error conectando a la base de datos:', err);
+});
 
 export default pool;
