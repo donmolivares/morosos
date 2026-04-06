@@ -14,12 +14,14 @@ function App() {
     meses_mora: "",
     corredor_responsable: "",
   });
-
   const [lista, setLista] = useState([]);
+  const [filteredLista, setFilteredLista] = useState([]); // lista filtrada
   const [editId, setEditId] = useState(null);
   const [adminMode, setAdminMode] = useState(false);
   const [clave, setClave] = useState("");
   const [showClave, setShowClave] = useState(false);
+  const [search, setSearch] = useState(""); // búsqueda por texto
+  const [condominioFilter, setCondominioFilter] = useState(""); // filtro por condominio
 
   const rutRef = useRef();
   const nombreRef = useRef();
@@ -35,37 +37,73 @@ function App() {
     getData();
   }, []);
 
+  useEffect(() => {
+    applyFilters();
+  }, [search, condominioFilter, lista]);
+
   const getData = async () => {
     try {
       const res = await axios.get(`${API_URL}/morosos`);
       setLista(res.data);
+      setFilteredLista(res.data);
     } catch (error) {
       console.error("Error al obtener morosos:", error);
     }
   };
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  // FILTROS Y BÚSQUEDA
+  const applyFilters = () => {
+    let filtered = [...lista];
 
-  const handleKeyDown = (e, nextRef) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      nextRef.current.focus();
+    // filtro por búsqueda
+    if (search.trim() !== "") {
+      filtered = filtered.filter(
+        (item) =>
+          item.nombre.toLowerCase().includes(search.toLowerCase()) ||
+          item.rut.toLowerCase().includes(search.toLowerCase()) ||
+          item.ciudad.toLowerCase().includes(search.toLowerCase())
+      );
     }
+
+    // filtro por condominio
+    if (condominioFilter !== "") {
+      filtered = filtered.filter((item) => item.condominio === condominioFilter);
+    }
+
+    setFilteredLista(filtered);
+  };
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async () => {
-    if (!form.rut || !form.nombre) return alert("RUT y Nombre son obligatorios");
+    if (!form.rut || !form.nombre) {
+      alert("RUT y Nombre son obligatorios");
+      return;
+    }
+
     try {
-      if (editId) await axios.put(`${API_URL}/morosos/${editId}`, form);
-      else await axios.post(`${API_URL}/morosos`, form);
+      if (editId) {
+        await axios.put(`${API_URL}/morosos/${editId}`, form);
+        setEditId(null);
+      } else {
+        await axios.post(`${API_URL}/morosos`, form);
+      }
       setForm({
-        rut: "", nombre: "", monto_adeudado: "", condominio: "", ciudad: "", meses_mora: "", corredor_responsable: "",
+        rut: "",
+        nombre: "",
+        monto_adeudado: "",
+        condominio: "",
+        ciudad: "",
+        meses_mora: "",
+        corredor_responsable: "",
       });
-      setEditId(null);
       getData();
       rutRef.current.focus();
     } catch (error) {
       console.error("Error al guardar registro:", error);
+      alert("Error al guardar registro");
     }
   };
 
@@ -73,7 +111,9 @@ function App() {
     if (clave === "123") {
       setAdminMode(true);
       setShowClave(false);
-    } else alert("Clave incorrecta");
+    } else {
+      alert("Clave incorrecta");
+    }
     setClave("");
   };
 
@@ -84,20 +124,18 @@ function App() {
 
   const handleDelete = async (id) => {
     if (window.confirm("¿Eliminar este registro?")) {
-      try {
-        await axios.delete(`${API_URL}/morosos/${id}`);
-        getData();
-      } catch (error) {
-        console.error("Error al eliminar registro:", error);
-      }
+      await axios.delete(`${API_URL}/morosos/${id}`);
+      getData();
     }
   };
 
+  // obtener lista única de condominios para filtro
+  const condominios = [...new Set(lista.map((item) => item.condominio))];
+
   return (
     <div className="appContainer">
-      {/* HEADER */}
       <header className="appHeader">
-        <h2>Corretaje de Propiedades - Sistema de Morosos</h2>
+        <h2>Corretaje de Propiedades</h2>
       </header>
 
       <main className="mainContent">
@@ -105,18 +143,22 @@ function App() {
         <div className="card">
           <h2>{editId ? "Editar Registro" : "Nuevo Registro"}</h2>
           <div className="grid">
-            <input ref={rutRef} name="rut" placeholder="RUT" onChange={handleChange} value={form.rut} onKeyDown={(e) => handleKeyDown(e, nombreRef)} />
-            <input ref={nombreRef} name="nombre" placeholder="Nombre" onChange={handleChange} value={form.nombre} onKeyDown={(e) => handleKeyDown(e, montoRef)} />
-            <input ref={montoRef} name="monto_adeudado" type="number" placeholder="Monto Adeudado" onChange={handleChange} value={form.monto_adeudado} onKeyDown={(e) => handleKeyDown(e, condominioRef)} />
-            <input ref={condominioRef} name="condominio" placeholder="Condominio" onChange={handleChange} value={form.condominio} onKeyDown={(e) => handleKeyDown(e, ciudadRef)} />
-            <input ref={ciudadRef} name="ciudad" placeholder="Ciudad" onChange={handleChange} value={form.ciudad} onKeyDown={(e) => handleKeyDown(e, mesesRef)} />
-            <input ref={mesesRef} name="meses_mora" type="number" placeholder="Meses en Mora" onChange={handleChange} value={form.meses_mora} onKeyDown={(e) => handleKeyDown(e, corredorRef)} />
-            <input ref={corredorRef} name="corredor_responsable" placeholder="Corredor Responsable" onChange={handleChange} value={form.corredor_responsable} onKeyDown={(e) => handleKeyDown(e, btnRef)} />
+            <input ref={rutRef} name="rut" placeholder="RUT" onChange={handleChange} value={form.rut} />
+            <input ref={nombreRef} name="nombre" placeholder="Nombre" onChange={handleChange} value={form.nombre} />
+            <input ref={montoRef} name="monto_adeudado" type="number" placeholder="Monto Adeudado" onChange={handleChange} value={form.monto_adeudado} />
+            <input ref={condominioRef} name="condominio" placeholder="Condominio" onChange={handleChange} value={form.condominio} />
+            <input ref={ciudadRef} name="ciudad" placeholder="Ciudad" onChange={handleChange} value={form.ciudad} />
+            <input ref={mesesRef} name="meses_mora" type="number" placeholder="Meses en Mora" onChange={handleChange} value={form.meses_mora} />
+            <input ref={corredorRef} name="corredor_responsable" placeholder="Corredor Responsable" onChange={handleChange} value={form.corredor_responsable} />
           </div>
 
           <div className="buttonGroup">
-            <button ref={btnRef} className="primaryBtn" onClick={handleSubmit}> {editId ? "Actualizar" : "Guardar"} </button>
-            <button className="secondaryBtn" onClick={() => setShowClave(!showClave)}>Opciones</button>
+            <button ref={btnRef} className="primaryBtn" onClick={handleSubmit}>
+              {editId ? "Actualizar" : "Guardar"}
+            </button>
+            <button className="secondaryBtn" onClick={() => setShowClave(!showClave)}>
+              Opciones
+            </button>
           </div>
 
           {showClave && (
@@ -125,6 +167,25 @@ function App() {
               <button className="primaryBtn" onClick={verificarClave}>Verificar</button>
             </div>
           )}
+        </div>
+
+        {/* FILTROS */}
+        <div className="card">
+          <h2>Filtros y Búsqueda</h2>
+          <div className="grid">
+            <input
+              type="text"
+              placeholder="Buscar por RUT, Nombre o Ciudad"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <select value={condominioFilter} onChange={(e) => setCondominioFilter(e.target.value)}>
+              <option value="">Todos los Condominios</option>
+              {condominios.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* TABLA */}
@@ -145,7 +206,7 @@ function App() {
                 </tr>
               </thead>
               <tbody>
-                {lista.map((item) => (
+                {filteredLista.map((item) => (
                   <tr key={item.id}>
                     <td>{item.rut}</td>
                     <td>{item.nombre}</td>
@@ -170,9 +231,8 @@ function App() {
         </div>
       </main>
 
-      {/* FOOTER */}
       <footer className="appFooter">
-        <p>© 2026 Corretaje de Propiedades | Todos los derechos reservados</p>
+        <h2>© 2026 Corretaje de Propiedades</h2>
       </footer>
     </div>
   );
