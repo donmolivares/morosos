@@ -5,9 +5,6 @@ import "./App.css";
 // Axios toma la URL base desde la variable de entorno
 const API_URL = import.meta.env.VITE_API_URL;
 
-
-
-
 function App() {
   const [form, setForm] = useState({
     rut: "",
@@ -25,10 +22,6 @@ function App() {
   const [clave, setClave] = useState(""); // input clave
   const [showClave, setShowClave] = useState(false); // mostrar input clave
 
-  
-
-
-
   // Refs para Enter
   const rutRef = useRef();
   const nombreRef = useRef();
@@ -44,23 +37,23 @@ function App() {
     getData();
   }, []);
 
-
-  
-
+  // Obtener datos desde el backend
   const getData = async () => {
     try {
-    const res = await axios.get(`${API_URL}/morosos`);
-    setLista(res.data);
-     } catch (error) {
-       console.error('Error al obtener morosos:', error);
-    throw error;
-  }
+      const res = await axios.get(`${API_URL}/morosos`);
+      setLista(res.data);
+    } catch (error) {
+      console.error("Error al obtener morosos:", error);
+      throw error;
+    }
   };
 
+  // Actualizar form al cambiar input
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Navegación con Enter entre inputs
   const handleKeyDown = (e, nextRef) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -68,31 +61,34 @@ function App() {
     }
   };
 
+  // Guardar o actualizar registro
   const handleSubmit = async () => {
     if (!form.rut || !form.nombre) {
       alert("RUT y Nombre son obligatorios");
       return;
     }
 
-    if (editId) {
-      await axios.put(`${API}/${editId}`, form);
-      setEditId(null);
-    } else {
-      await axios.post(API, form);
+    try {
+      if (editId) {
+        await axios.put(`${API_URL}/${editId}`, form);
+        setEditId(null);
+      } else {
+        await axios.post(`${API_URL}`, form);
+      }
+      setForm({
+        rut: "",
+        nombre: "",
+        monto_adeudado: "",
+        condominio: "",
+        ciudad: "",
+        meses_mora: "",
+        corredor_responsable: "",
+      });
+      getData();
+      rutRef.current.focus();
+    } catch (error) {
+      console.error("Error al guardar registro:", error);
     }
-
-    setForm({
-      rut: "",
-      nombre: "",
-      monto_adeudado: "",
-      condominio: "",
-      ciudad: "",
-      meses_mora: "",
-      corredor_responsable: "",
-    });
-
-    getData();
-    rutRef.current.focus();
   };
 
   // Activar admin mode si clave es correcta
@@ -106,15 +102,21 @@ function App() {
     setClave("");
   };
 
+  // Editar registro
   const handleEdit = (item) => {
     setForm(item);
     setEditId(item.id);
   };
 
+  // Eliminar registro
   const handleDelete = async (id) => {
     if (window.confirm("¿Eliminar este registro?")) {
-      await axios.delete(`${API}/${id}`);
-      getData();
+      try {
+        await axios.delete(`${API_URL}/${id}`);
+        getData();
+      } catch (error) {
+        console.error("Error al eliminar registro:", error);
+      }
     }
   };
 
