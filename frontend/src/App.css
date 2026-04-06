@@ -56,20 +56,23 @@ h2 {
   margin-bottom: 0.5rem;
 }
 
-/* ==========================
-   INPUTS
-========================== */
+/* INPUTS Y SELECT UNIFORMES */
 input, select {
   width: 100%;
-  padding: 0.6rem 0.5rem;
+  padding: 0.6rem 0.5rem;       /* altura uniforme */
   margin-bottom: 0.5rem;
-  border: 1px solid #0074D9;
+  border: 1px solid #0074D9;   /* borde azul */
   border-radius: 5px;
-  background-color: #e0e0e0;
-  color: #000;
-  font-size: 1rem;
+  background-color: #e0e0e0;    /* gris claro */
+  color: #000;                  /* letra negra */
+  font-size: 1rem;              /* tamaño uniforme */
   box-sizing: border-box;
   transition: border 0.2s;
+}
+
+input:focus, select:focus {
+  border-color: #005bb5;        /* azul más intenso al enfocar */
+  outline: none;
 }
 
 input:focus, select:focus {
