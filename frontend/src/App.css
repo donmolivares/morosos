@@ -4,14 +4,19 @@
   flex-direction: column;
   min-height: 100vh;
   font-family: Arial, sans-serif;
+  background-color: #f5f5f5; /* mismo color para body, header y footer */
+  color: #000; /* texto negro */
+  padding: 0;
+  margin: 0;
 }
 
 /* HEADER */
 .appHeader {
-  background-color: #004080;
-  color: white;
+  background-color: #f5f5f5;
+  color: #000;
   padding: 1rem;
   text-align: center;
+  border-bottom: 1px solid #ddd; /* separación visual */
 }
 
 /* MAIN */
@@ -24,40 +29,80 @@
 
 /* CARD */
 .card {
-  background-color: #f5f5f5;
+  background-color: #ffffff; /* ligeramente más claro que el body */
   padding: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem; /* separación entre cards */
   border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  box-shadow: 0 0 3px rgba(0,0,0,0.1);
+}
+
+/* TITULOS */
+h2 {
+  color: #000;
+  margin-bottom: 0.5rem;
+}
+
+/* INPUTS */
+input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #eaeaea; /* gris claro */
+  font-size: 1rem;
+  box-sizing: border-box;
 }
 
 /* BOTONES ESTANDARIZADOS */
 .primaryBtn, .secondaryBtn, .editBtn, .deleteBtn {
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.8rem;
   margin: 0.3rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
-  min-width: 120px; /* mismo tamaño */
+  font-size: 0.95rem;
+  min-width: 100px; /* tamaño más moderado */
   text-align: center;
 }
 
-.primaryBtn { background-color: #004080; color: white; }
-.secondaryBtn { background-color: #e0e0e0; color: #333; }
+.primaryBtn { background-color: #333; color: white; }
+.secondaryBtn { background-color: #999; color: white; }
 .editBtn { background-color: #ffa500; color: white; }
 .deleteBtn { background-color: #ff3333; color: white; }
 
-.primaryBtn:hover { background-color: #003366; }
-.secondaryBtn:hover { background-color: #cccccc; }
+.primaryBtn:hover { background-color: #222; }
+.secondaryBtn:hover { background-color: #777; }
 .editBtn:hover { background-color: #e59400; }
 .deleteBtn:hover { background-color: #cc0000; }
 
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: left;
+}
+
 /* FOOTER */
 .appFooter {
-  background-color: #004080;
-  color: white;
+  background-color: #f5f5f5;
+  color: #000;
   padding: 1rem;
   text-align: center;
+  border-top: 1px solid #ddd;
   margin-top: auto;
+}
+
+/* SEPARACION ENTRE AREAS */
+.buttonGroup, .claveContainer {
+  margin-top: 0.5rem;
+}
+
+.grid input {
+  margin-bottom: 0.5rem;
 }

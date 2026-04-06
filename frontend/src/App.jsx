@@ -97,7 +97,7 @@ function App() {
     <div className="appContainer">
       {/* HEADER */}
       <header className="appHeader">
-        <h1>Corretaje de Propiedades - Sistema de Morosos</h1>
+        <h2>Corretaje de Propiedades - Sistema de Morosos</h2>
       </header>
 
       <main className="mainContent">
