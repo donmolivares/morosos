@@ -1,113 +1,63 @@
-body {
-  margin: 0;
+/* Contenedor general */
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   font-family: Arial, sans-serif;
-  background-color: #e5e7eb; /* gris corporativo */
 }
 
-.container {
-  padding: 30px;
-}
-
-.title {
+/* HEADER */
+.appHeader {
+  background-color: #004080;
+  color: white;
+  padding: 1rem;
   text-align: center;
-  color: #1f2d3d;
-  margin-bottom: 20px;
 }
 
+/* MAIN */
+.mainContent {
+  flex: 1;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* CARD */
 .card {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background-color: #f5f5f5;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-input {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #d1d5db; /* gris suave */
-  background-color: #f1f5f9; /* gris claro */
-  color: #000; /* texto negro */
-  outline: none;
-  font-size: 14px;
-  transition: all 0.2s ease-in-out;
-}
-
-input:focus {
-  border: 1px solid #1f77d0;
-  background-color: #ffffff;
-  box-shadow: 0 0 4px rgba(31, 119, 208, 0.3);
-}
-
-.primaryBtn {
-  background-color: #1f77d0;
-  color: #fff;
-  padding: 10px 20px;
+/* BOTONES ESTANDARIZADOS */
+.primaryBtn, .secondaryBtn, .editBtn, .deleteBtn {
+  padding: 0.5rem 1rem;
+  margin: 0.3rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 1rem;
+  min-width: 120px; /* mismo tamaño */
+  text-align: center;
 }
 
-.primaryBtn:hover {
-  background-color: #155a9c;
-}
+.primaryBtn { background-color: #004080; color: white; }
+.secondaryBtn { background-color: #e0e0e0; color: #333; }
+.editBtn { background-color: #ffa500; color: white; }
+.deleteBtn { background-color: #ff3333; color: white; }
 
-.tableContainer {
-  overflow-x: auto;
-}
+.primaryBtn:hover { background-color: #003366; }
+.secondaryBtn:hover { background-color: #cccccc; }
+.editBtn:hover { background-color: #e59400; }
+.deleteBtn:hover { background-color: #cc0000; }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 800px;
-}
-
-th, td {
-  padding: 8px 12px;
-  border: 1px solid #d1d5db;
-  text-align: left;
-  font-size: 14px;
-}
-
-th {
-  background-color: #1f77d0;
-  color: #fff;
-}
-
-tr:nth-child(even) {
-  background-color: #f9fafb;
-}
-
-.editBtn {
-  background-color: #ffc107;
-  border: none;
-  padding: 6px 10px;
-  margin-right: 5px;
-  cursor: pointer;
-  color: #000;
-  border-radius: 4px;
-}
-
-.editBtn:hover {
-  background-color: #e0a800;
-}
-
-.deleteBtn {
-  background-color: #dc3545;
-  color: #fff;
-  border: none;
-  padding: 6px 10px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.deleteBtn:hover {
-  background-color: #b02a37;
+/* FOOTER */
+.appFooter {
+  background-color: #004080;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  margin-top: auto;
 }
