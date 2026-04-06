@@ -19,6 +19,15 @@ app.head('/', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
+app.use((req, res, next) => {
+  res.status(404).json({ message: 'Ruta no encontrada' });
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Error interno del servidor' });
+});
+
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

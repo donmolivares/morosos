@@ -1,5 +1,5 @@
 import { Router } from "express";
-const ctrl = require('../controllers/morosoController');
+import { morosoController as ctrl } from "../controllers/morosoController.js"; // ⚡ nota la extensión .js
 
 const router = Router();
 
