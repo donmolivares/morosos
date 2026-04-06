@@ -1,7 +1,7 @@
 import cors from "cors";
 import "dotenv/config";
 import express from "express";
-import morosoRoutes from "./routes/morosoRoutes";
+import morosoRoutes from "./routes/morosoRoutes.js";
 
 const app = express();
 
@@ -9,7 +9,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/morosos', morosoRoutes);
-
 app.get('/', (req, res) => {
   res.send('Backend funcionando ✅');
 });
