@@ -18,9 +18,9 @@ function App() {
 
   const [lista, setLista] = useState([]);
   const [editId, setEditId] = useState(null);
-  const [adminMode, setAdminMode] = useState(false); // controla visibilidad botones
-  const [clave, setClave] = useState(""); // input clave
-  const [showClave, setShowClave] = useState(false); // mostrar input clave
+  const [adminMode, setAdminMode] = useState(false);
+  const [clave, setClave] = useState("");
+  const [showClave, setShowClave] = useState(false);
 
   // Refs para Enter
   const rutRef = useRef();
@@ -44,7 +44,6 @@ function App() {
       setLista(res.data);
     } catch (error) {
       console.error("Error al obtener morosos:", error);
-      throw error;
     }
   };
 
@@ -70,11 +69,12 @@ function App() {
 
     try {
       if (editId) {
-        await axios.put(`${API_URL}/${editId}`, form);
+        await axios.put(`${API_URL}/morosos/${editId}`, form);
         setEditId(null);
       } else {
-        await axios.post(`${API_URL}`, form);
+        await axios.post(`${API_URL}/morosos`, form);
       }
+
       setForm({
         rut: "",
         nombre: "",
@@ -84,6 +84,7 @@ function App() {
         meses_mora: "",
         corredor_responsable: "",
       });
+
       getData();
       rutRef.current.focus();
     } catch (error) {
@@ -112,7 +113,7 @@ function App() {
   const handleDelete = async (id) => {
     if (window.confirm("¿Eliminar este registro?")) {
       try {
-        await axios.delete(`${API_URL}/${id}`);
+        await axios.delete(`${API_URL}/morosos/${id}`);
         getData();
       } catch (error) {
         console.error("Error al eliminar registro:", error);
